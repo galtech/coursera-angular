@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="LunchCheck">
+  <head>
+    <meta charset="utf-8">
+    <script src="../../angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>LunchCheck App</title>
+  </head>
+  <body>
+    <div ng-controller="LunchCheckController">
+      <h1>LunchCheck App</h1>
+      <br/>
+      Enter lunch items here: <input type="text" ng-model="lunchitems"><br/>
+      <button ng-click="checkQty()">Check Quantity</button><br/>
+      {{result}}
+  </div>
+  </body>
+</html>

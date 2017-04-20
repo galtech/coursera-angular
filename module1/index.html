@@ -2,7 +2,7 @@
 <html ng-app="NameCalculator">
   <head>
     <meta charset="utf-8">
-    <script src="angular.min.js"></script>
+    <script src="../angular.min.js"></script>
     <script src="app.js"></script>
     <title>Name Calculator</title>
   </head>
@@ -14,8 +14,14 @@
                   ng-keyup="displayNumeric()"
                   ng-blur="upper()"><br/>
       Total Numeric value of person's name: {{totalValue}}
-    </div>
+      <br/>
 
+      <!-- <div>
+        <button ng-click="feedPerson()">Feed Person</button><br/>
+        <img ng-src="images/yaakov_{{state}}.png">
+      </div> -->
+
+    </div>
 
     <!-- <div id="target" ng-app="myTestApp">
       <section>Section 1
