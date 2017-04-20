@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="NameCalculator">
   <head>
     <meta charset="utf-8">
-    <title>Hello Coursera</title>
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>Name Calculator</title>
   </head>
   <body>
-    <h1>Hello Coursera Students!</h1>
+    <h1>Name Calculator</h1>
+    <div ng-controller="NameCalculatorController">
+      Your name: <input type="text"
+                  ng-model="name"
+                  ng-keyup="displayNumeric()"
+                  ng-blur="upper()"><br/>
+      Total Numeric value of person's name: {{totalValue}}
+    </div>
+
+
+    <!-- <div id="target" ng-app="myTestApp">
+      <section>Section 1
+        <article>Article 1</article>
+      </section>
+    </div> -->
+
+    <script>
+      // var elem = document.getElementById('target');
+      // console.log(elem);
+      //
+      // console.log(elem.getAttribute('ng-app'));
+      // var elem2 = document.querySelector("[ng-app]");
+      // console.log(elem2);
+      // console.log(elem2.getAttribute('ng-app'));
+    </script>
+
   </body>
 </html>
