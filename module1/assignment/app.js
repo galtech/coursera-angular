@@ -29,8 +29,12 @@
           }else{
             if (items.length <= 3){
               $scope.result = "Enjoy!";
+              $scope.fontColor = "green";
+              $scope.borderColor = "green";
             }else{
               $scope.result = "Too much!";
+              $scope.fontColor = "red";
+              $scope.borderColor = "red";
             }
           }
 

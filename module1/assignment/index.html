@@ -11,8 +11,11 @@
       <h1>LunchCheck App</h1>
       <br/>
       Enter lunch items here: <input type="text" ng-model="lunchitems"><br/>
-      <button ng-click="checkQty()">Check Quantity</button><br/>
-      {{result}}
+      <button ng-click="checkQty()">Check Quantity</button><br/><br/>
+      <div style="height:40px;
+                width: 100px;
+                color:{{fontColor}};
+                border:1px solid {{borderColor}}">{{result}}</div>
   </div>
   </body>
 </html>
