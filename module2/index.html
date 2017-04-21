@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="ModuleTwo">
+  <head>
+    <meta charset="utf-8">
+    <script src="../../angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>Module 2</title>
+  </head>
+  <body>
+    <div ng-controller="ModuleTwoController">
+    Original: {{sayMessage()}} <br/>
+    Loves: {{sayLovesMessage()}} <br/>
+    Truth: {{sayLovesMessage() | truth : 'Peter' : 'Peter really'}} <br/>
+    Big Truth: {{sayLovesMessage() | truth : 'Peter' : 'Peter really' | uppercase}} <br/>
+    <br/>
+    <hr>
+
+    <div>
+    <button ng-click="showNumberOfWatchers()">Log # of Watchers</button><br/>
+    <input type="text" ng-model="name">
+    </div>
+
+    <div>
+      <button ng-click="countOnce()">Up Once Counter (once)</button><br/>
+      <button ng-click="upCounter()">Increment Counter</button>
+    </div>
+
+    <div>
+      Once counter: {{onceCounter}} <br/>
+      Regular counter: {{counter}} <br/>
+
+    </div>
+
+    <hr>
+    <h3>Binding - 1 way, 2 way, 1 time</h3>
+    <div>
+      <button ng-click="showNumberOfWatchers()">Log # of Watchers</button><br/>
+      <button ng-click="setFullName()">Set Full Name</button><br/>
+
+      Full name is: {{:: fullName}} <br/>
+      <button ng-click="logFirstName()">Log First Name</button><br/>
+      <button ng-click="logFullName()">Log Full Name</button><br/>
+      <br/>
+      <input type="text" ng-model="firstName">
+    </div>
+
+
+  </div>
+  </body>
+</html>
