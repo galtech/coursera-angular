@@ -1,10 +1,39 @@
 (function(){
 'use strict';
 
+var shoppingList1 = [
+  "Milk", "Donuts", "Cookies", "Chocolate", "Peanut Butter", "Pepto Bismol",
+  "Pepto Bismol (Chocolate flavour)", "Pepto Bismol (Cookie flavour)"
+];
+
+var shoppingList2 = [
+  {
+    name: "Milk",
+    quantity: "2"
+  },
+  {
+    name: "Donuts",
+    quantity: "200"
+  },
+  {
+    name: "Cookies",
+    quantity: "300"
+  },
+  {
+    name: "Chocolate",
+    quantity: "5"
+  }
+];
+
 angular.module('ModuleTwo', [])
 .controller('ModuleTwoController', ModuleTwoController)
 .filter('loves', LovesFilter)
 .filter('truth', TruthFilter);
+
+// angular.module('ParentController2',[])
+// .controller('ParentController2',ParentController2);
+// angular.module('ChildController2',[])
+// .controller('ChildController2',ChildController2);
 
 ModuleTwoController.$inject = ['$scope', 'lovesFilter','$timeout'];
 
@@ -14,6 +43,8 @@ function ModuleTwoController($scope, lovesFilter,$timeout){
   $scope.counter = 0;
   $scope.name = "Peter";
   $scope.firstName = "Peter";
+  $scope.shoppingList1 = shoppingList1;
+  $scope.shoppingList2 = shoppingList2;
   // $scope.fullName = "";
 
   $scope.sayMessage = function() {
@@ -55,6 +86,15 @@ function ModuleTwoController($scope, lovesFilter,$timeout){
     }, 2000);
   };
 
+  $scope.addToList = function (){
+    var newItem = {
+      name: $scope.newItemName,
+      quantity: $scope.newItemQuantity
+    };
+
+    $scope.shoppingList2.push(newItem);
+  };
+
   // $scope.upCounter = function () {
   //   setTimeout(function(){
   //       $scope.$apply(function(){
@@ -89,6 +129,17 @@ function ModuleTwoController($scope, lovesFilter,$timeout){
   // });
 
 }
+
+// function ParentController2($scope){
+//   var parent = this;
+//   parent.value = 1;
+// }
+// ChildController2.$inject = ['$scope'];
+// function ChildController2($scope){
+//   var child = this;
+//   child.value = 5;
+//   console.log("ChildController2 $scope: ", $scope);
+// }
 
 function LovesFilter() {
   return function (input) {
