@@ -7,6 +7,7 @@
     <title>Module 2</title>
   </head>
   <body>
+
     <div ng-controller="ModuleTwoController">
     Original: {{sayMessage()}} <br/>
     Loves: {{sayLovesMessage()}} <br/>
@@ -69,6 +70,54 @@
     <hr>
   </div>
 
+  <p>placeholder where original shopping list example of service method was.</p>
+  <!-- <div ng-controller="ShoppingListAddController as itemAdder">
+    <input type="text" ng-model="itemAdder.itemName" placeholder="item name">
+    <input type="text" ng-model="itemAdder.itemQuantity" placeholder="quantity">
+    <button ng-click="itemAdder.addItem();">Add item to shopping list</button>
+  </div>
+
+  <div ng-controller="ShoppingListShowController as showList">
+    <ol>
+      <li ng-repeat="item in showList.items">
+        {{item.quantity}} of {{item.name}}
+        <button ng-click="showList.removeItem($index)">Remove item</button>
+      </li>
+    </ol>
+  </div> -->
+
+  <hr>
+
+  <div id="list1" ng-controller="ShoppingListController1 as list1" style="width:40%; float:left;">
+    <h3>Shopping List 1</h3>
+    <input type="text" ng-model="list1.itemName" placeholder="item name">
+    <input type="text" ng-model="list1.itemQuantity" placeholder="quantity">
+    <button ng-click="list1.addItem();">Add item</button>
+    <ol>
+      <li ng-repeat="item in list1.items">
+        {{item.quantity}} of {{item.name}}
+        <button ng-click="list1.removeItem($index)">Remove item</button>
+      </li>
+    </ol>
+    <span style="color:red" ng-hide="!list1.errorMessage">
+      Error: {{list1.errorMessage}}
+    </span>
+  </div>
+
+  <!-- <div id="list2" ng-controller="ShoppingListController2 as list2" style="width:40%; float:left;">
+    <h3>Shopping List 2 (limited to 3 items)</h3>
+    <input type="text" ng-model="list2.itemName" placeholder="item name">
+    <input type="text" ng-model="list2.itemQuantity" placeholder="quantity">
+    <button ng-click="list2.addItem();">Add item</button>
+    <ol>
+      <li ng-repeat="item in list2.items">
+        {{item.quantity}} of {{item.name}}
+        <button ng-click="list2.removeItem($index)">Remove item</button>
+      </li>
+    </ol>
+    <span style="color:red">Error: {{list2.errorMessage}}</span>
+  </div> -->
+
   <!-- <div ng-controller="ParentController1">
     <div ng-controller="ChildController1">
     </div>
@@ -82,6 +131,10 @@
       Parent value: {{parent.value}}
     </div>
   </div> -->
+
+  <hr style="clear:left;">
+
+
 
   </body>
 </html>
