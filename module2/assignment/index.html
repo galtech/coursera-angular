@@ -1,13 +1,49 @@
 <!DOCTYPE html>
-<html ng-app="assignment2">
+<html ng-app="ShoppingChecklistApp">
   <head>
     <meta charset="utf-8">
     <script src="../../angular.min.js"></script>
     <script src="app.js"></script>
-    <title>Assignment 2</title>
+    <title>ShoppingChecklistApp</title>
+    <style media="screen">
+      .listContainer{
+          width: 49%;
+          float: left;
+      }
+    </style>
   </head>
   <body>
-    <h1>Assignment 2</h1>
+    <div class="listContainer">
+
+
+    <h3>My Shopping List (to buy)</h3>
+      <div ng-controller="ShoppinglistController as shopList">
+        <span ng-if="shopList.items == 0">Everything is bought</span>
+        <div ng-repeat="item in shopList.items">
+          <ul>
+            <li>
+              Buy {{item.quantity}} of {{item.name}}
+              <button ng-click="shopList.checkOff($index)">Bought</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="listContainer">
+      <h3>Already Bought</h3>
+      <div ng-controller="ChecklistController as checkList">
+        <span ng-if="checkList.items == 0">Nothing bought yet</span>
+          <div ng-repeat="item in checkList.items">
+            <ul>
+              <li>
+                {{item.quantity}} of {{item.name}} bought.
+              </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+
+
 
   </body>
 </html>
