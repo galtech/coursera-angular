@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="ModuleThree">
+  <head>
+    <meta charset="utf-8">
+    <script src="../../angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>Module 3</title>
+  </head>
+  <body>
+    <h3>Module 3</h3>
+
+    <!-- <div ng-controller="MenuCategoriesController as menu">
+      <h3>List of Menu Categories</h3>
+      <ul>
+        <li ng-repeat="category in menu.categories">
+          ({{category.short_name}})
+          {{category.name}}
+        </li>
+      </ul>
+    </div> -->
+
+
+
+      <div ng-controller="ShoppingListController as list">
+        <h3>Shopping List</h3>
+        <input type="text" ng-model="list.itemName" placeholder="item name">
+        <input type="text" ng-model="list.itemQuantity" placeholder="quantity"> boxes
+        <button ng-click="list.addItem();">Add Item</button>
+        <ol>
+          <li ng-repeat="item in list.items">
+              {{item.quantity}} boxes of {{item.name}}
+              <button ng-click="list.removeItem($index);">Remove Item</button>
+          </li>
+        </ol>
+      </div>
+  </body>
+</html>
