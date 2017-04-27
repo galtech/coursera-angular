@@ -3,8 +3,13 @@
 
 angular.module('ModuleThree', [])
 .controller('MenuCategoriesController', MenuCategoriesController)
+.controller('ShoppingListController1', ShoppingListController1)
+.controller('ShoppingListController2', ShoppingListController2)
+.factory('ShoppingListFactory', ShoppingListFactory)
 .service('MenuCategoriesService', MenuCategoriesService)
-.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
+.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com")
+.directive('listItemDescription', listItemDescription)
+.directive('listItem', listItem);
 // .controller('ShoppingListController', ShoppingListController)
 // .service('ShoppingListService', ShoppingListService)
 // .service('WeightLossFilterService', WeightLossFilterService);
@@ -33,6 +38,113 @@ function MenuCategoriesController(MenuCategoriesService){
     })
   };
 }
+
+
+
+// LIST #1 - controller
+ShoppingListController1.$inject = ['ShoppingListFactory'];
+function ShoppingListController1(ShoppingListFactory) {
+  var list = this;
+
+  // Use factory to create new shopping list service
+  var shoppingList = ShoppingListFactory();
+
+  list.items = shoppingList.getItems();
+
+  list.itemName = "";
+  list.itemQuantity = "";
+
+  list.addItem = function () {
+    shoppingList.addItem(list.itemName, list.itemQuantity);
+  }
+
+  list.removeItem = function (itemIndex) {
+    shoppingList.removeItem(itemIndex);
+  };
+}
+
+
+// LIST #2 - controller
+ShoppingListController2.$inject = ['ShoppingListFactory'];
+function ShoppingListController2(ShoppingListFactory) {
+  var list = this;
+
+  // Use factory to create new shopping list service
+  var shoppingList = ShoppingListFactory(3);
+
+  list.items = shoppingList.getItems();
+
+  list.itemName = "";
+  list.itemQuantity = "";
+
+  list.addItem = function () {
+    try {
+      shoppingList.addItem(list.itemName, list.itemQuantity);
+    } catch (error) {
+      list.errorMessage = error.message;
+    }
+
+  };
+
+  list.removeItem = function (itemIndex) {
+    shoppingList.removeItem(itemIndex);
+  };
+}
+
+// If not specified, maxItems assumed unlimited
+function ShoppingListService(maxItems) {
+  var service = this;
+
+  // List of shopping items
+  var items = [];
+
+  service.addItem = function (itemName, quantity) {
+    if ((maxItems === undefined) ||
+        (maxItems !== undefined) && (items.length < maxItems)) {
+      var item = {
+        name: itemName,
+        quantity: quantity
+      };
+      items.push(item);
+    }
+    else {
+      throw new Error("Max items (" + maxItems + ") reached.");
+    }
+  };
+
+  service.removeItem = function (itemIndex) {
+    items.splice(itemIndex, 1);
+  };
+
+  service.getItems = function () {
+    return items;
+  };
+}
+
+function ShoppingListFactory() {
+  var factory = function (maxItems) {
+    return new ShoppingListService(maxItems);
+  };
+
+  return factory;
+}
+
+function listItemDescription(){
+  var ddo = {
+    template: '{{item.quantity}} of {{item.name}}'
+  };
+
+  return ddo;
+}
+
+function listItem(){
+  var ddo = {
+    templateUrl: 'listItem.html'
+  };
+
+  return ddo;
+}
+
 
 MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
 function MenuCategoriesService($http, ApiBasePath){
