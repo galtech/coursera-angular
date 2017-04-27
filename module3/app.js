@@ -9,7 +9,8 @@ angular.module('ModuleThree', [])
 .service('MenuCategoriesService', MenuCategoriesService)
 .constant('ApiBasePath', "http://davids-restaurant.herokuapp.com")
 .directive('listItemDescription', listItemDescription)
-.directive('listItem', listItem);
+.directive('listItem', listItem)
+.directive('shoppingList', ShoppingList);
 // .controller('ShoppingListController', ShoppingListController)
 // .service('ShoppingListService', ShoppingListService)
 // .service('WeightLossFilterService', WeightLossFilterService);
@@ -50,16 +51,20 @@ function ShoppingListController1(ShoppingListFactory) {
   var shoppingList = ShoppingListFactory();
 
   list.items = shoppingList.getItems();
+  var origTitle = "Shopping List #1";
+  list.title = origTitle + " (" + list.items.length + " items )";
 
   list.itemName = "";
   list.itemQuantity = "";
 
   list.addItem = function () {
     shoppingList.addItem(list.itemName, list.itemQuantity);
+    list.title = origTitle + " (" + list.items.length + " items )";
   }
 
   list.removeItem = function (itemIndex) {
     shoppingList.removeItem(itemIndex);
+    list.title = origTitle + " (" + list.items.length + " items )";
   };
 }
 
@@ -73,6 +78,7 @@ function ShoppingListController2(ShoppingListFactory) {
   var shoppingList = ShoppingListFactory(3);
 
   list.items = shoppingList.getItems();
+  list.title = "Shopping List #2 ( " + list.items.length + " out of max 3 items)";
 
   list.itemName = "";
   list.itemQuantity = "";
@@ -83,11 +89,13 @@ function ShoppingListController2(ShoppingListFactory) {
     } catch (error) {
       list.errorMessage = error.message;
     }
+    list.title = "Shopping List #2 ( " + list.items.length + " out of max 3 items)";
 
   };
 
   list.removeItem = function (itemIndex) {
     shoppingList.removeItem(itemIndex);
+    list.title = "Shopping List #2 ( " + list.items.length + " out of max 3 items)";
   };
 }
 
@@ -141,6 +149,18 @@ function listItem(){
   var ddo = {
     restrict: 'E',
     templateUrl: 'listItem.html'
+  };
+
+  return ddo;
+}
+
+function ShoppingList(){
+  var ddo = {
+    templateUrl: 'shoppingList.html',
+    scope: {
+      list: '=myList',
+      title: '@title'
+    }
   };
 
   return ddo;
