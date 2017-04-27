@@ -5,12 +5,13 @@ angular.module('ModuleThree', [])
 .controller('MenuCategoriesController', MenuCategoriesController)
 .controller('ShoppingListController1', ShoppingListController1)
 .controller('ShoppingListController2', ShoppingListController2)
+// .controller('ShoppingListDirectiveController', ShoppingListDirectiveController)
 .factory('ShoppingListFactory', ShoppingListFactory)
 .service('MenuCategoriesService', MenuCategoriesService)
 .constant('ApiBasePath', "http://davids-restaurant.herokuapp.com")
 .directive('listItemDescription', listItemDescription)
 .directive('listItem', listItem)
-.directive('shoppingList', ShoppingList);
+.directive('shoppingList', ShoppingListDirective);
 // .controller('ShoppingListController', ShoppingListController)
 // .service('ShoppingListService', ShoppingListService)
 // .service('WeightLossFilterService', WeightLossFilterService);
@@ -99,6 +100,21 @@ function ShoppingListController2(ShoppingListFactory) {
   };
 }
 
+function ShoppingListDirectiveController(){
+  var list = this;
+
+  list.cookiesInList = function () {
+    for(var i = 0; i < list.items.length; i++){
+      var name = list.items[i].name;
+      if (name.toLowerCase().indexOf("cookie") !== -1){
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
+
 // If not specified, maxItems assumed unlimited
 function ShoppingListService(maxItems) {
   var service = this;
@@ -154,17 +170,21 @@ function listItem(){
   return ddo;
 }
 
-function ShoppingList(){
+function ShoppingListDirective(){
   var ddo = {
     templateUrl: 'shoppingList.html',
     scope: {
-      list: '=myList',
+      items: '<',
       title: '@title'
-    }
+    },
+    //controller: 'ShoppingListDirectiveController as list',
+    controller: ShoppingListDirectiveController,
+    controllerAs: 'list',
+    bindToController: true
   };
 
   return ddo;
-}
+}//list: '=myList',
 
 
 MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
