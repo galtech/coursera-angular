@@ -139,6 +139,7 @@ function listItemDescription(){
 
 function listItem(){
   var ddo = {
+    restrict: 'E',
     templateUrl: 'listItem.html'
   };
 
