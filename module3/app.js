@@ -55,6 +55,8 @@ function ShoppingListController1(ShoppingListFactory) {
   var origTitle = "Shopping List #1";
   list.title = origTitle + " (" + list.items.length + " items )";
 
+  list.warning = "COOKIES DETECTED!";
+
   list.itemName = "";
   list.itemQuantity = "";
 
@@ -185,7 +187,8 @@ function ShoppingListDirective(){
     controller: ShoppingListDirectiveController,
     controllerAs: 'list',
     bindToController: true,
-    link: ShoppingListDirectiveLink
+    link: ShoppingListDirectiveLink,
+    transclude: true
   };
 
   return ddo;
