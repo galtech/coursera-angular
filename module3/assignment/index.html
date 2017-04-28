@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="MenuSearchApp">
+  <head>
+    <meta charset="utf-8">
+    <script src="../../angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>Search Menu Items</title>
+  </head>
+  <body>
+    <h1>Search Menu Items</h1>
+
+    <div ng-controller="MenuSearchController as search">
+      <input type="text" ng-model="searchItem" placeholder="Enter search term"><br/>
+      <br/>
+      <button ng-click="searchMenuItems();">Narrow it down for me</button>
+      <ul>
+        <li>menu item, short_name, description</li>
+        <li>
+          
+        </li>
+      </ul>
+    </div>
+
+  </body>
+</html>
