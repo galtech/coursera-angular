@@ -17,8 +17,13 @@
       <input type="text" ng-model="list.itemName" placeholder="item name">
       <input type="text" ng-model="list.itemQuantity" placeholder="quantity">
       <button ng-click="list.addItem();">Add Item</button>
+      <span>{{ list.lastRemoved }}</span>
 
-        <shopping-list items="list.items" title="{{list.title}}"></shopping-list>
+        <shopping-list
+          items="list.items"
+          title="{{list.title}}"
+          bad-remove="list.removeItem"
+          on-remove="list.removeItem(index)"></shopping-list>
 
       <!-- <div ng-if="list1.errorMessage" class="error">Error: {{list1.errorMessage}}</div> -->
     </div>

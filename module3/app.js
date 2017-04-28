@@ -64,6 +64,8 @@ function ShoppingListController1(ShoppingListFactory) {
   }
 
   list.removeItem = function (itemIndex) {
+    console.log("'this' is: ", this);
+    this.lastRemoved = "Last item removed was " + this.items[itemIndex].name;
     shoppingList.removeItem(itemIndex);
     list.title = origTitle + " (" + list.items.length + " items )";
   };
@@ -175,7 +177,9 @@ function ShoppingListDirective(){
     templateUrl: 'shoppingList.html',
     scope: {
       items: '<',
-      title: '@title'
+      title: '@title',
+      badRemove: '=',
+      onRemove: '&'
     },
     //controller: 'ShoppingListDirectiveController as list',
     controller: ShoppingListDirectiveController,
