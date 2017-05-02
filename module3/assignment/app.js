@@ -30,7 +30,7 @@ function MenuSearchController($scope, MenuItemsService){
 
     for(var i = 0; i < search.results.length; i++){
       // var description = search.results[i].description;
-      console.log(search.results[i].name);
+      
       if (description.toLowerCase().indexOf(searchTerm) !== -1){
         found.push(description);
       }
