@@ -6,26 +6,39 @@ angular.module('MenuSearchApp', [])
 .service('MenuItemsService', MenuItemsService)
 .constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
 
-MenuSearchController.$inject = ['MenuItemsService'];
-function MenuSearchController(MenuItemsService){
+MenuSearchController.$inject = ['$scope', 'MenuItemsService'];
+function MenuSearchController($scope, MenuItemsService){
   var search = this;
 
   var found = [];
-  var searchTerm = search.searchItem;
 
-  var promise = MenuItemsService.getMenuSearchItem(searchTerm);
+  var searchTerm = "";
+
+  var promise = MenuItemsService.getMenuSearchItem();
 
   promise.then(function (response){
     search.results = response.data;
-    console.log(search.results);
+    console.log("API response: ", search.results);
   })
   .catch(function (error){
     console.log("Something went terribly wrong");
   });
 
-  search.searchMenuItems = function (results) {
+  search.searchMenuItems = function () {
+    // found = searchMenu(search.results,searchTerm);
+    searchTerm = $scope.searchItem;
 
+    for(var i = 0; i < search.results.length; i++){
+      // var description = search.results[i].description;
+      console.log(search.results[i].name);
+      if (description.toLowerCase().indexOf(searchTerm) !== -1){
+        found.push(description);
+      }
+    }
+
+    console.log("Found array: ", found);
   }
+
 }
 
 MenuItemsService.$inject = ['$http', 'ApiBasePath'];
@@ -42,15 +55,19 @@ function MenuItemsService($http, ApiBasePath){
   };
 }
 
-function searchMenu(results){
-  for(var i = 0; i < results.items.length; i++){
-    var name = results.items[i].name;
-    if (name.toLowerCase().indexOf("cookie") !== -1){
-      // return true;
-    }
-  }
-
-  // return false;
-}
+// function searchMenu(results, searchTerm){
+//   var found = [];
+//
+//   for(var i = 0; i < results.items.length; i++){
+//     var userSearch = searchTerm;
+//     if (userSearch.toLowerCase().indexOf(userSearch) !== -1){
+//       found.push(results.items[i].description);
+//     }
+//
+//     return found;
+//   }
+//
+//   // return false;
+// }
 
 })();
