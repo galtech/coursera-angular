@@ -14,29 +14,32 @@ function MenuSearchController($scope, MenuItemsService){
 
   var searchTerm = "";
 
-  var promise = MenuItemsService.getMenuSearchItem();
-
-  promise.then(function (response){
-    search.results = response.data;
-    console.log("API response: ", search.results);
-  })
-  .catch(function (error){
-    console.log("Something went terribly wrong");
-  });
-
   search.searchMenuItems = function () {
-    // found = searchMenu(search.results,searchTerm);
+
     searchTerm = $scope.searchItem;
 
-    for(var i = 0; i < search.results.length; i++){
-      // var description = search.results[i].description;
-      
-      if (description.toLowerCase().indexOf(searchTerm) !== -1){
-        found.push(description);
-      }
-    }
 
-    console.log("Found array: ", found);
+    var promise = MenuItemsService.getMenuItems();
+
+    promise.then(function (response){
+      search.results = response.data;
+      // console.log("API response: ", search.results);
+
+      for (var i = 0; i < search.results.menu_items.length; i++){
+        var description = search.results.menu_items[i].description;
+        var item = search.results.menu_items[i].name;
+        var shortName = search.results.menu_items[i].short_name;
+        if(description.toLowerCase().indexOf(searchTerm) !== -1){
+          found.push(shortName,item,description);
+        }
+
+      }
+      console.log(found);
+    })
+    .catch(function (error){
+      console.log("Something went terribly wrong");
+    });
+
   }
 
 }
@@ -45,7 +48,7 @@ MenuItemsService.$inject = ['$http', 'ApiBasePath'];
 function MenuItemsService($http, ApiBasePath){
   var service = this;
 
-  service.getMenuSearchItem = function (searchTerm){
+  service.getMenuItems = function (searchTerm){
     var response = $http({
       method: "GET",
       url: (ApiBasePath+"/menu_items.json"),

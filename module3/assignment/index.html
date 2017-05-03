@@ -13,10 +13,10 @@
       <input type="text" ng-model="searchItem" placeholder="Enter search term"><br/>
       <br/>
       <button ng-click="search.searchMenuItems();">Narrow it down for me</button>
+      <h3>Results (menu item, short_name, description):</h3>
       <ul>
-        <li>menu item, short_name, description</li>
-        <li>
-          
+        <li ng-repeat="searchresult in found">
+          {{searchresult}}
         </li>
       </ul>
     </div>
