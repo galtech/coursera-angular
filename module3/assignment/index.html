@@ -15,8 +15,10 @@
       <button ng-click="search.searchMenuItems();">Narrow it down for me</button>
       <h3>Results (menu item, short_name, description):</h3>
       <ul>
+        <span ng-hide="!noresult">{{noresult}}</span>
         <li ng-repeat="searchresult in found">
-          {{searchresult}}
+          <button ng-click="removeItem($index)">Don't want this one</button>
+          {{searchresult.name}} | {{searchresult.short_name}} | {{searchresult.description}}
         </li>
       </ul>
     </div>

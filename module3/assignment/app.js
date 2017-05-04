@@ -10,9 +10,10 @@ MenuSearchController.$inject = ['$scope', 'MenuItemsService'];
 function MenuSearchController($scope, MenuItemsService){
   var search = this;
 
-  var found = [];
+  $scope.found = [];
 
   var searchTerm = "";
+  $scope.noresult = "";
 
   search.searchMenuItems = function () {
 
@@ -29,12 +30,19 @@ function MenuSearchController($scope, MenuItemsService){
         var description = search.results.menu_items[i].description;
         var item = search.results.menu_items[i].name;
         var shortName = search.results.menu_items[i].short_name;
+        var menuItem = search.results.menu_items[i];
+
         if(description.toLowerCase().indexOf(searchTerm) !== -1){
-          found.push(shortName,item,description);
+          $scope.found.push(menuItem);
         }
 
       }
-      console.log(found);
+
+      if(found.length < 0 || searchTerm == ""){
+        $scope.noresult = "Nothing found";
+      }
+
+
     })
     .catch(function (error){
       console.log("Something went terribly wrong");
