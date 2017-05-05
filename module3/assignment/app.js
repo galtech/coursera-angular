@@ -10,10 +10,10 @@ MenuSearchController.$inject = ['$scope', 'MenuItemsService'];
 function MenuSearchController($scope, MenuItemsService){
   var search = this;
 
-  $scope.found = [];
-
+  var found = [];
   var searchTerm = "";
-  $scope.noresult = "";
+
+  search.items = MenuItemsService.getItems();
 
   search.searchMenuItems = function () {
 
@@ -26,22 +26,24 @@ function MenuSearchController($scope, MenuItemsService){
       search.results = response.data;
       // console.log("API response: ", search.results);
 
-      for (var i = 0; i < search.results.menu_items.length; i++){
-        var description = search.results.menu_items[i].description;
-        var item = search.results.menu_items[i].name;
-        var shortName = search.results.menu_items[i].short_name;
+      for(var i = 0; i < search.results.menu_items.length; i++){
         var menuItem = search.results.menu_items[i];
 
-        if(description.toLowerCase().indexOf(searchTerm) !== -1){
-          $scope.found.push(menuItem);
-        }
-
+        // if(menuItem.description.toLowerCase().indexOf(searchTerm) !== -1){
+        //   // search.addItem(itemName, shortName, itemDesc);
+        // }
       }
-
-      if(found.length < 0 || searchTerm == ""){
-        $scope.noresult = "Nothing found";
-      }
-
+      // for (var i = 0; i < search.results.menu_items.length; i++){
+      //   var description = search.results.menu_items[i].description;
+      //   var item = search.results.menu_items[i].name;
+      //   var shortName = search.results.menu_items[i].short_name;
+      //   var menuItem = search.results.menu_items[i];
+      //
+      //   if(description.toLowerCase().indexOf(searchTerm) !== -1){
+      //     $scope.found.push(menuItem);
+      //   }
+      //
+      // }
 
     })
     .catch(function (error){
@@ -50,11 +52,25 @@ function MenuSearchController($scope, MenuItemsService){
 
   }
 
+  search.addItem = function () {
+    try{
+        MenuItemsService.addItem(list1.itemName, list1.itemQuantity);
+    } catch (error) {
+        list1.errorMessage = error.message;
+    }
+  }
+
+  search.removeItem = function (itemIndex) {
+    MenuItemsService.removeItem(itemIndex);
+  }
+
+
 }
 
 MenuItemsService.$inject = ['$http', 'ApiBasePath'];
 function MenuItemsService($http, ApiBasePath){
   var service = this;
+  var items = [];
 
   service.getMenuItems = function (searchTerm){
     var response = $http({
@@ -64,6 +80,20 @@ function MenuItemsService($http, ApiBasePath){
 
     return response;
   };
+
+  service.addItem = function(itemName, shortName, itemDesc) {
+    // add items to a found array
+    items = ['test','test','test'];
+  };
+
+  service.removeItem = function (itemIndex){
+    items.splice(itemIndex, 1);
+  };
+
+  service.getItems = function (){
+    return items;
+  };
+
 }
 
 // function searchMenu(results, searchTerm){
