@@ -4,7 +4,7 @@
 angular.module('MenuSearchApp', [])
 .controller('MenuSearchController', MenuSearchController)
 .service('MenuItemsService', MenuItemsService)
-.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
 
 MenuSearchController.$inject = ['$scope', 'MenuItemsService'];
 function MenuSearchController($scope, MenuItemsService){
