@@ -12,14 +12,13 @@
     <div ng-controller="MenuSearchController as search">
       <input type="text" ng-model="searchItem" placeholder="Enter search term"><br/>
       <br/>
-      <button ng-click="search.searchMenuItems();">Narrow it down for me</button>
+      <button ng-click="search.removeAll();search.searchMenuItems();">Narrow it down for me</button>
       <h3>Results (menu item, short_name, description):</h3>
+      <span ng-if="search.found.length < 1">{{search.noresult}}</span>
       <ul>
-        <!-- <span ng-if="found.length == 0">{{noresult}}</span> -->
-        <li  ng-repeat="searchresult in search.items">
-          <button ng-click="removeItem($index)">Don't want this one</button>
-          <!-- {{searchresult.name}} | {{searchresult.short_name}} | {{searchresult.description}} -->
-          {{searchresult}}
+        <li  ng-repeat="searchresult in search.found">
+          <button ng-click="search.removeItem($index)">Don't want this one</button>
+          {{searchresult.name}} | {{searchresult.short_name}} | {{searchresult.description}}
         </li>
       </ul>
     </div>

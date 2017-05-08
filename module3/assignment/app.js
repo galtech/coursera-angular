@@ -13,12 +13,15 @@ function MenuSearchController($scope, MenuItemsService){
   var found = [];
   var searchTerm = "";
 
-  search.items = MenuItemsService.getItems();
+  search.itemName = "";
+  search.itemShortName = "";
+  search.itemDesc = "";
+  search.noresult = "";
+
+  search.found = MenuItemsService.getItems();
 
   search.searchMenuItems = function () {
-
     searchTerm = $scope.searchItem;
-
 
     var promise = MenuItemsService.getMenuItems();
 
@@ -29,21 +32,19 @@ function MenuSearchController($scope, MenuItemsService){
       for(var i = 0; i < search.results.menu_items.length; i++){
         var menuItem = search.results.menu_items[i];
 
-        // if(menuItem.description.toLowerCase().indexOf(searchTerm) !== -1){
-        //   // search.addItem(itemName, shortName, itemDesc);
-        // }
+        if(menuItem.description.toLowerCase().indexOf(searchTerm) !== -1){
+          search.itemName = menuItem.name;
+          search.itemShortName = menuItem.short_name;
+          search.itemDesc = menuItem.description;
+
+          search.addItem(
+                        search.itemName,
+                        search.itemShortName,
+                        search.itemDesc);
+        }else{
+          search.noresult = "Nothing found";
+        }
       }
-      // for (var i = 0; i < search.results.menu_items.length; i++){
-      //   var description = search.results.menu_items[i].description;
-      //   var item = search.results.menu_items[i].name;
-      //   var shortName = search.results.menu_items[i].short_name;
-      //   var menuItem = search.results.menu_items[i];
-      //
-      //   if(description.toLowerCase().indexOf(searchTerm) !== -1){
-      //     $scope.found.push(menuItem);
-      //   }
-      //
-      // }
 
     })
     .catch(function (error){
@@ -54,9 +55,9 @@ function MenuSearchController($scope, MenuItemsService){
 
   search.addItem = function () {
     try{
-        MenuItemsService.addItem(list1.itemName, list1.itemQuantity);
+        MenuItemsService.addItem(search.itemName, search.itemShortName, search.itemDesc);
     } catch (error) {
-        list1.errorMessage = error.message;
+        search.errorMessage = error.message;
     }
   }
 
@@ -64,6 +65,9 @@ function MenuSearchController($scope, MenuItemsService){
     MenuItemsService.removeItem(itemIndex);
   }
 
+  search.removeAll = function(){
+    MenuItemsService.removeAll();
+  }
 
 }
 
@@ -83,11 +87,21 @@ function MenuItemsService($http, ApiBasePath){
 
   service.addItem = function(itemName, shortName, itemDesc) {
     // add items to a found array
-    items = ['test','test','test'];
+    var item = {
+      name: itemName,
+      short_name: shortName,
+      description: itemDesc
+    };
+    items.push(item);
+
   };
 
   service.removeItem = function (itemIndex){
     items.splice(itemIndex, 1);
+  };
+
+  service.removeAll = function() {
+    items.length = 0;
   };
 
   service.getItems = function (){
@@ -95,20 +109,5 @@ function MenuItemsService($http, ApiBasePath){
   };
 
 }
-
-// function searchMenu(results, searchTerm){
-//   var found = [];
-//
-//   for(var i = 0; i < results.items.length; i++){
-//     var userSearch = searchTerm;
-//     if (userSearch.toLowerCase().indexOf(userSearch) !== -1){
-//       found.push(results.items[i].description);
-//     }
-//
-//     return found;
-//   }
-//
-//   // return false;
-// }
 
 })();
