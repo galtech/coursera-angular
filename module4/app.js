@@ -12,10 +12,34 @@ angular.module('ShoppingListComponentApp', [])
     myTitle: '@title',
     onRemove: '&'
   }
+})
+.component('loadingSpinner',{
+  templateUrl: 'spinner.html',
+  controller: SpinnerController
 });
 
-ShoppingListComponentController.$inject = ['$scope', '$element']
-function ShoppingListComponentController($scope, $element) {
+SpinnerController.$inject = ['$rootScope'];
+function SpinnerController($rootScope){
+  var $ctrl = this;
+
+  var cancelListener = $rootScope.$on('shoppinglist:processing', function (event, data){
+    console.log("Event: ", event);
+    console.log("Data: ", data);
+
+    if(data.on){
+      $ctrl.showSpinner = true;
+    }else{
+      $ctrl.showSpinner = false;
+    }
+  });
+
+  $ctrl.$onDestroy = function () {
+    cancelListener();
+  };
+}
+
+ShoppingListComponentController.$inject = ['$scope', '$element','$q','WeightLossFilterService']
+function ShoppingListComponentController($scope, $element, $q, $WeightLossFilterService) {
   var $ctrl = this;
   var totalItems;
 
@@ -45,17 +69,39 @@ function ShoppingListComponentController($scope, $element) {
 
   $ctrl.$doCheck = function (){
     if($ctrl.items.length !== totalItems){
-      console.log("# of items changed. Checking for Cookies!");
+      // console.log("# of items changed. Checking for Cookies!");
       totalItems = $ctrl.items.length;
-      if($ctrl.cookiesInList()){
-        console.log("Oh, no! cookies!!");
-        var warningElem = $element.find('div.error');
-        warningElem.slideDown(900);
-      }else{
-        console.log("No cookies here. Move right along!");
+      $rootScope.$broadcast('shoppinglist:processing', {on: true});
+      var promises = [];
+      for (var i = 0; i < $ctrl.items.length; i++) {
+        promises.push(WeightLossFilterService.checkName($ctrl.items[i].name));
+      }
+
+      $q.all(promises)
+      .then(function (result) {
+        // Remove cookie warning
         var warningElem = $element.find('div.error');
         warningElem.slideUp(900);
-      }
+      })
+      .catch(function (result) {
+        // Show cookie warning
+        var warningElem = $element.find('div.error');
+        warningElem.slideDown(900);
+      })
+      .finally(function () {
+        $rootScope.$broadcast('shoppinglist:processing', { on: false });
+      });
+      // if($ctrl.cookiesInList()){
+      //   // console.log("Oh, no! cookies!!");
+      //   var warningElem = $element.find('div.error');
+      //   warningElem.slideDown(900);
+      // }else{
+      //   // console.log("No cookies here. Move right along!");
+      //   var warningElem = $element.find('div.error');
+      //   warningElem.slideUp(900);
+      // }
+
+
     }
   };
   // $ctrl.$postLink = function () {
@@ -99,6 +145,11 @@ function ShoppingListController(ShoppingListFactory) {
     shoppingList.removeItem(itemIndex);
     this.title = origTitle + " (" + list.items.length + " items )";
   };
+}
+
+WeightLossFilterService.$inject = ['$q', '$timeout']
+function WeightLossFilterService($q, $timeout) {
+
 }
 
 
