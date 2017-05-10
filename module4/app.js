@@ -38,21 +38,21 @@ function SpinnerController($rootScope){
   };
 }
 
-ShoppingListComponentController.$inject = ['$scope', '$element','$q','WeightLossFilterService']
-function ShoppingListComponentController($scope, $element, $q, $WeightLossFilterService) {
+ShoppingListComponentController.$inject = ['$scope', '$element','$q', 'WeightLossFilterService']
+function ShoppingListComponentController($scope, $element, $q, WeightLossFilterService) {
   var $ctrl = this;
   var totalItems;
 
-  $ctrl.cookiesInList = function() {
-    for(var i = 0; i < $ctrl.items.length; i++){
-      var name = $ctrl.items[i].name;
-      if(name.toLowerCase().indexOf("cookie") !== -1){
-        return true;
-      }
-    }
-
-    return false;
-  };
+  // $ctrl.cookiesInList = function() {
+  //   for(var i = 0; i < $ctrl.items.length; i++){
+  //     var name = $ctrl.items[i].name;
+  //     if(name.toLowerCase().indexOf("cookie") !== -1){
+  //       return true;
+  //     }
+  //   }
+  //
+  //   return false;
+  // };
 
   $ctrl.remove = function (myIndex) {
     $ctrl.onRemove({ index : myIndex });
@@ -101,7 +101,6 @@ function ShoppingListComponentController($scope, $element, $q, $WeightLossFilter
       //   warningElem.slideUp(900);
       // }
 
-
     }
   };
   // $ctrl.$postLink = function () {
@@ -147,8 +146,52 @@ function ShoppingListController(ShoppingListFactory) {
   };
 }
 
-WeightLossFilterService.$inject = ['$q', '$timeout']
+WeightLossFilterService.$inject = ['$q', '$timeout',]
 function WeightLossFilterService($q, $timeout) {
+
+  var service = this;
+
+  service.checkName = function (name) {
+    var deferred = $q.defer();
+
+    var result = {
+      message: ""
+    };
+
+    $timeout(function () {
+      // Check for cookies
+      if (name.toLowerCase().indexOf('cookie') === -1) {
+        deferred.resolve(result)
+      }
+      else {
+        result.message = "Stay away from cookies, Yaakov!";
+        deferred.reject(result);
+      }
+    }, 3000);
+
+    return deferred.promise;
+  };
+
+
+  service.checkQuantity = function (quantity) {
+    var deferred = $q.defer();
+    var result = {
+      message: ""
+    };
+
+    $timeout(function () {
+      // Check for too many boxes
+      if (quantity < 6) {
+        deferred.resolve(result);
+      }
+      else {
+        result.message = "That's too much, Yaakov!";
+        deferred.reject(result);
+      }
+    }, 1000);
+
+    return deferred.promise;
+  };
 
 }
 
@@ -189,6 +232,5 @@ function ShoppingListFactory() {
 
   return factory;
 }
-
 
 })();
