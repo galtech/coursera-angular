@@ -10,12 +10,30 @@ RestaurantMenuService.$inject = ['$q', '$timeout','$http', 'ApiBasePath']
 function RestaurantMenuService($q, $timeout, $http, ApiBasePath) {
   var service = this;
 
+  // var itemName = "";
+  // var itemShortName = "";
+  // var itemDesc = "";
+
   // List of menu items
   var items = [];
 
-  var itemName = "";
-  var itemShortName = "";
-  var itemDesc = "";
+  // tmp item List
+  // items.push({
+  //     name: 'chicken stirfry',
+  //     short_name: 'CS',
+  //     description: 'chicken stir fried with onions and peppers served with sesame noodles'
+  //   });
+  // items.push({
+  //     name: 'beef stirfry',
+  //     short_name: 'BS',
+  //     description: 'beef stir fried with onions and peppers served with sesame noodles'
+  //   });
+  // items.push({
+  //     name: 'prawn stirfry',
+  //     short_name: 'PS',
+  //     description: 'prawns stir fried with onions and peppers served with sesame noodles'
+  //   });
+
 
   service.getMenuItems = function (){
     var response = $http({
@@ -29,47 +47,12 @@ function RestaurantMenuService($q, $timeout, $http, ApiBasePath) {
   service.addItem = function(itemName, shortName, itemDesc) {
     // add items to a found array
 
-    items.push({
-        item: 'chicken stirfry',
-        short_name: 'CS',
-        description: 'chicken stir fried with onions and peppers served with sesame noodles'
-      });
-    items.push({
-        item: 'beef stirfry',
-        short_name: 'BS',
-        description: 'beef stir fried with onions and peppers served with sesame noodles'
-      });
-    items.push({
-        item: 'prawn stirfry',
-        short_name: 'PS',
-        description: 'prawns stir fried with onions and peppers served with sesame noodles'
-      });
-
-    // var promise = service.getMenuItems();
-    //
-    // promise.then(function (response){
-    //   var results = response.data;
-    //   // console.log("API response: ", search.results);
-    //
-    //   for(var i = 0; i < results.menu_items.length; i++){
-    //     var menuItem = results.menu_items[i];
-    //
-    //       // itemName = menuItem.name;
-    //       // itemShortName = menuItem.short_name;
-    //       // itemDesc = menuItem.description;
-    //       var item = {
-    //         name: menuItem.name,
-    //         short_name: menuItem.short_name,
-    //         description: menuItem.description
-    //       };
-    //       items.push(item);
-    //
-    //   }
-    //
-    // })
-    // .catch(function (error){
-    //   console.log("Something went terribly wrong");
-    // });
+          var item = {
+            name: itemName,
+            short_name: shortName,
+            description: itemDesc
+          };
+          items.push(item);
 
   };
 
