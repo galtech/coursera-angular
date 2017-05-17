@@ -22,7 +22,7 @@ function MainRestaurantMenuController(RestaurantMenuService, items) {
 
     for(var i = 0; i < categorylist.items.menu_items.length; i++){
       var menuItem = categorylist.items.menu_items[i];
-
+        // console.log(menuItem);
         categorylist.itemName = menuItem.name;
         categorylist.itemShortName = menuItem.short_name;
         categorylist.itemDesc = menuItem.description;
@@ -31,14 +31,6 @@ function MainRestaurantMenuController(RestaurantMenuService, items) {
                       categorylist.itemName,
                       categorylist.itemShortName,
                       categorylist.itemDesc);
-
-        // var item = {
-        //   name: menuItem.name,
-        //   short_name: menuItem.short_name,
-        //   description: menuItem.description
-        // };
-        // items.push(item);
-
     }
 
   })
@@ -48,9 +40,11 @@ function MainRestaurantMenuController(RestaurantMenuService, items) {
 
   categorylist.addItem = function () {
     try{
-        RestaurantMenuService.addItem(categorylist.itemName,
-                                      categorylist.itemShortName,
-                                      categorylist.itemDesc);
+        RestaurantMenuService.addItem(
+                              categorylist.itemName,
+                              categorylist.itemShortName,
+                              categorylist.itemDesc
+                            );
     } catch (error) {
         categorylist.errorMessage = error.message;
     }
