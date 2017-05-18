@@ -10,7 +10,7 @@ function ItemDetailController($stateParams, items) {
   var itemDetail = this;
   var item = items[$stateParams.itemId];
   itemDetail.name = item.name;
-  itemDetail.quantity = item.quantity;
+  itemDetail.short_name = item.short_name;
   itemDetail.description = item.description;
 }
 

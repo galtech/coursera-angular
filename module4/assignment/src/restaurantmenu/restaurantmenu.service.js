@@ -10,10 +10,6 @@ RestaurantMenuService.$inject = ['$q', '$timeout','$http', 'ApiBasePath']
 function RestaurantMenuService($q, $timeout, $http, ApiBasePath) {
   var service = this;
 
-  // var itemName = "";
-  // var itemShortName = "";
-  // var itemDesc = "";
-
   // List of menu items
   var items = [];
 
