@@ -17,7 +17,7 @@ function MainRestaurantMenuController(RestaurantMenuService, items) {
 
   promise.then(function (response){
     categorylist.items = response.data;
-    console.log("API response: ", categorylist.items);
+    // console.log("API response: ", categorylist.items);
 
     for(var i = 0; i < categorylist.items.menu_items.length; i++){
       var menuItem = categorylist.items.menu_items[i];
