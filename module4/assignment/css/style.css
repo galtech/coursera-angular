@@ -1,0 +1,15 @@
+.breadcrumb{
+  margin-right: 50%;
+}
+
+.menuitems{
+  width: 60%;
+  float: left;
+}
+
+.itemdetails{
+  width: 35%;
+  float: left;
+  color: red;
+  font-weight: bold;
+}

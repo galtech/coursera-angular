@@ -1,5 +1,6 @@
-<h3>Items</h3>
 
-<div>Item name: {{ itemDetail.name }}</div>
-<div>Item short name: {{ itemDetail.short_name }}</div>
-<div>Item description: {{ itemDetail.description }}</div>
+<div class="itemdetails">
+  <div ng-if="itemDetail.name">Item name: {{ itemDetail.name }}</div>
+  <div ng-if="itemDetail.short_name">Item short name: {{ itemDetail.short_name }}</div>
+  <div ng-if="itemDetail.description">Item description: {{ itemDetail.description }}</div>
+</div>
